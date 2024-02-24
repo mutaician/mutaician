@@ -2,7 +2,7 @@
 
 <p align="left"> <a href="https://twitter.com/mutaician" target="blank"><img src="https://img.shields.io/twitter/follow/mutaician?logo=twitter&style=for-the-badge" alt="mutaician" /></a> </p>
 
-- 🔭 I’m currently working on **on my life**
+- 🔭 I’m currently working **on my life**
 
 - 🌱 I’m currently learning **web development and machine learning**
 
