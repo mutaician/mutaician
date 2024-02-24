@@ -1,4 +1,4 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=24&pause=1000&color=0FF704&center=true&random=false&width=435&lines=Hi+%F0%9F%91%8B%2C+I'm+Cyprian+Kiplangat;I+love+coding;I+am+trying+to+escape+the+matrix)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=24&pause=1000&color=0FF704&random=false&width=435&lines=Hi+%F0%9F%91%8B%2C+I'm+Cyprian+Kiplangat;I+love+coding;Escaping+the+matrix)](https://git.io/typing-svg)
 
 <p align="left"> <a href="https://twitter.com/mutaician" target="blank"><img src="https://img.shields.io/twitter/follow/mutaician?logo=twitter&style=for-the-badge" alt="mutaician" /></a> </p>
 
