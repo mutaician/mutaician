@@ -1,9 +1,9 @@
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=24&pause=1000&color=0FF704&random=false&width=435&lines=Hi+%F0%9F%91%8B%2C+I'm+Cyprian+Kiplangat;I+love+coding;Escaping+the+matrix)](https://git.io/typing-svg)
 
 
-- 🔭 I’m currently working **on my life**
+- 🔭 I’m currently working **on my skills**
 
-- 🌱 I’m currently learning **web development and machine learning**
+- 🌱 I’m currently learning **Generative AI**
 
 - 🤝 I’m looking for help with **ideas**
 
