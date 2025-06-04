@@ -11,7 +11,7 @@
 
 - 📫 How to reach me **cyprianmutai5900@gmail.com**
 
-- ⚡ Fun fact **life is an illusion**
+- ⚡ Fun fact **everything is an illusion**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
