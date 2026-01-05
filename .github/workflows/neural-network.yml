@@ -1,0 +1,40 @@
+name: Generate Neural Network Contribution Graph
+
+on:
+  schedule:
+    - cron: "0 */24 * * *" # Run every 24 hours
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: pip install requests
+        
+      - name: Generate SVG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: python generate_animated_nn.py
+        
+      - name: Push SVG to output branch
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: output
+          build_dir: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
