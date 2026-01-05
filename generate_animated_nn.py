@@ -96,7 +96,7 @@ def generate_animated_nn_svg():
     ]
     
     cell_delays = {}
-    step_time = 0.15
+    step_time = 0.08 # Faster propagation
     
     def add_cell(x, y, delay):
         if (x, y) not in cell_delays or delay < cell_delays[(x, y)]:
@@ -196,18 +196,33 @@ def generate_animated_nn_svg():
         f'    15% {{ fill: {C0}; }}',
         f'    100% {{ fill: {C0}; }}',
         '  }',
+        # Discovery animations: Start at C0, pulse to C4, then settle and STAY at contribution color
         '  @keyframes discovery-1 { 0% { fill: ' + C0 + '; } 5% { fill: ' + C4 + '; } 15% { fill: ' + C1 + '; } 100% { fill: ' + C1 + '; } }',
         '  @keyframes discovery-2 { 0% { fill: ' + C0 + '; } 5% { fill: ' + C4 + '; } 15% { fill: ' + C2 + '; } 100% { fill: ' + C2 + '; } }',
         '  @keyframes discovery-3 { 0% { fill: ' + C0 + '; } 5% { fill: ' + C4 + '; } 15% { fill: ' + C3 + '; } 100% { fill: ' + C3 + '; } }',
         '  @keyframes discovery-4 { 0% { fill: ' + C0 + '; } 5% { fill: ' + C4 + '; } 15% { fill: ' + C4 + '; } 100% { fill: ' + C4 + '; } }',
-        '  .cell { animation: neural-cycle 10s infinite; }',
-        '  .disc-1 { animation: discovery-1 10s forwards; }',
-        '  .disc-2 { animation: discovery-2 10s forwards; }',
-        '  .disc-3 { animation: discovery-3 10s forwards; }',
-        '  .disc-4 { animation: discovery-4 10s forwards; }',
+        '  .cell { animation: neural-cycle 5s infinite; }',
+        '  .disc-1 { animation: discovery-1 5s forwards; }',
+        '  .disc-2 { animation: discovery-2 5s forwards; }',
+        '  .disc-3 { animation: discovery-3 5s forwards; }',
+        '  .disc-4 { animation: discovery-4 5s forwards; }',
         '</style>',
         f'<rect width="100%" height="100%" fill="#0d1117" rx="6"/>'
     ]
+
+    # Prepare discovery sequence
+    all_contributions = []
+    for x in range(COLS):
+        for y in range(ROWS):
+            if contribution_grid[x][y] > 0:
+                all_contributions.append((x, y))
+    
+    import random
+    random.seed(42) 
+    random.shuffle(all_contributions)
+    
+    # Map each contribution to a unique loop index
+    discovery_map = {pos: i for i, pos in enumerate(all_contributions)}
 
     for x in range(COLS):
         for y in range(ROWS):
@@ -217,22 +232,23 @@ def generate_animated_nn_svg():
             level = contribution_grid[x][y]
             
             if (x, y) in cell_delays:
-                delay = cell_delays[(x, y)]
+                path_delay = cell_delays[(x, y)]
                 if level > 0:
-                    # Discovery: Starts empty, pulses bright, stays at contribution color
-                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="disc-{level}" style="animation-delay: {delay}s;"/>')
+                    # Contribution on the path:
+                    loop_idx = discovery_map[(x, y)]
+                    reveal_delay = (loop_idx * 5) + path_delay
+                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="disc-{level}" style="animation-delay: {reveal_delay}s;"/>')
                 else:
-                    # Neural Path: Pulses and fades back to empty
-                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="cell" style="animation-delay: {delay}s;"/>')
+                    # Normal path cell: pulses infinitely
+                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="cell" style="animation-delay: {path_delay}s;"/>')
             else:
                 # Background cells (not in NN path)
                 if level > 0:
-                    # These are "discovered" by background noise/activity at random times
-                    import random
-                    bg_delay = random.uniform(1, 9)
-                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="disc-{level}" style="animation-delay: {bg_delay}s;"/>')
+                    loop_idx = discovery_map[(x, y)]
+                    # Background cells reveal slightly after the main pulse passes their column
+                    reveal_delay = (loop_idx * 5) + (x * 0.05) 
+                    svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2" class="disc-{level}" style="animation-delay: {reveal_delay}s;"/>')
                 else:
-                    # Truly empty cells
                     svg.append(f'<rect x="{cx}" y="{cy}" width="{CELL_SIZE}" height="{CELL_SIZE}" fill="{C0}" rx="2"/>')
 
     svg.append('</svg>')

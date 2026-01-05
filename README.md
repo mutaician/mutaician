@@ -36,5 +36,4 @@
   <img src="https://raw.githubusercontent.com/mutaician/mutaician/output/neural_network_graph.svg" alt="Neural Network Contribution Graph" />
 </p>
 
-*This simulator maps my GitHub contribution graph into a multi-layer perceptron. Each neuron's activation level corresponds to my coding activity, with signals propagating through hidden layers to produce the final output.*
 
