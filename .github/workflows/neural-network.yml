@@ -32,9 +32,11 @@ jobs:
         run: python generate_animated_nn.py
         
       - name: Push SVG to output branch
-        uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: output
-          build_dir: .
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan output
+          git rm -rf .
+          git add neural_network_graph.svg
+          git commit -m "Update neural network graph"
+          git push origin output --force
