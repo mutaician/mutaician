@@ -15,7 +15,7 @@
 
 - 💬 Ask me about **current GenAI**
 
-- ⚡ Fun fact **AI is not intelligent **
+- ⚡ Fun fact **AI is not intelligent**
 
 - 👨‍💻 All of my projects are available at **[https://github.com/mutaician](https://github)**
 
